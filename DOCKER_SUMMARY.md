@@ -73,8 +73,8 @@ After running `./start.sh`, access:
 
 ```
 hedri-sakni/
-├── 🐳 docker-compose.yml           # Development environment
-├── 🏭 docker-compose.prod.yml      # Production environment
+├── 🐳 docker compose.yml           # Development environment
+├── 🏭 docker compose.prod.yml      # Production environment
 ├── 📝 .env.example                 # Environment variables template
 │
 ├── 🚀 start.sh                     # Start all services ⭐
@@ -108,7 +108,7 @@ hedri-sakni/
 1. **Make sure Docker is installed:**
    ```bash
    docker --version
-   docker-compose --version
+   docker compose --version
    ```
 
 2. **Start the application:**
@@ -163,7 +163,7 @@ UIPATH_CLIENT_SECRET=your-client-secret
 
 Then restart:
 ```bash
-docker-compose restart backend
+docker compose restart backend
 ```
 
 ---
@@ -199,14 +199,14 @@ When you run `./start.sh`, Docker starts:
 
 ## 🎨 Features
 
-### Development Mode (docker-compose.yml)
+### Development Mode (docker compose.yml)
 - ✅ Hot reload for frontend (Vite)
 - ✅ Auto reload for backend (Flask debug)
 - ✅ Code changes reflect immediately
 - ✅ Source code mounted as volumes
 - ✅ Easy debugging
 
-### Production Mode (docker-compose.prod.yml)
+### Production Mode (docker compose.prod.yml)
 - ✅ Gunicorn WSGI server (4 workers)
 - ✅ Nginx for frontend
 - ✅ Optimized React build
@@ -253,8 +253,8 @@ lsof -ti:5173 | xargs kill -9  # Frontend
 **Solution:**
 ```bash
 # Rebuild containers
-docker-compose down
-docker-compose up -d --build
+docker compose down
+docker compose up -d --build
 ```
 
 ### Problem: Want to start fresh
@@ -262,7 +262,7 @@ docker-compose up -d --build
 **Solution:**
 ```bash
 # Remove everything (⚠️ deletes database!)
-docker-compose down -v
+docker compose down -v
 ./start.sh
 ```
 
@@ -279,14 +279,14 @@ docker-compose down -v
 ./stop.sh
 
 # Restart all services
-docker-compose restart
+docker compose restart
 
 # Restart specific service
-docker-compose restart backend
-docker-compose restart frontend
+docker compose restart backend
+docker compose restart frontend
 
 # Check service status
-docker-compose ps
+docker compose ps
 
 # View resource usage
 docker stats
@@ -303,34 +303,34 @@ docker stats
 ./logs.sh postgres
 
 # Last 100 lines
-docker-compose logs --tail=100
+docker compose logs --tail=100
 
 # Logs since 10 minutes ago
-docker-compose logs --since 10m
+docker compose logs --since 10m
 ```
 
 ### Database
 ```bash
 # Connect to database
-docker-compose exec postgres psql -U postgres -d hedri_sakni
+docker compose exec postgres psql -U postgres -d hedri_sakni
 
 # Backup database
-docker-compose exec postgres pg_dump -U postgres hedri_sakni > backup.sql
+docker compose exec postgres pg_dump -U postgres hedri_sakni > backup.sql
 
 # Restore database
-cat backup.sql | docker-compose exec -T postgres psql -U postgres -d hedri_sakni
+cat backup.sql | docker compose exec -T postgres psql -U postgres -d hedri_sakni
 
 # View database size
-docker-compose exec postgres psql -U postgres -c "SELECT pg_size_pretty(pg_database_size('hedri_sakni'));"
+docker compose exec postgres psql -U postgres -c "SELECT pg_size_pretty(pg_database_size('hedri_sakni'));"
 ```
 
 ### Cleanup
 ```bash
 # Stop and remove containers
-docker-compose down
+docker compose down
 
 # Stop and remove containers + volumes
-docker-compose down -v
+docker compose down -v
 
 # Remove unused images
 docker image prune -a
@@ -363,7 +363,7 @@ docker system prune -a --volumes
 
 3. **Start production services:**
    ```bash
-   docker-compose -f docker-compose.prod.yml up -d --build
+   docker compose -f docker compose.prod.yml up -d --build
    ```
 
 4. **Access application:**

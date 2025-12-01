@@ -192,7 +192,7 @@ Your repository will include:
 hedri-sakni/
 ├── backend/           # Flask API
 ├── frontend/          # React App
-├── docker-compose.yml # Docker setup
+├── docker compose.yml # Docker setup
 ├── README.md          # Main documentation
 ├── DOCKER.md          # Docker guide
 ├── .gitignore         # Ignored files

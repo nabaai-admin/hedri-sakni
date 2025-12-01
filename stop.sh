@@ -4,6 +4,6 @@
 
 echo "🛑 Stopping Land Reservation Admin System..."
 
-docker-compose down
+docker compose down
 
 echo "✅ All services stopped."

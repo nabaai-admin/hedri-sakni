@@ -17,7 +17,7 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+if ! command -v docker compose &> /dev/null && ! docker compose version &> /dev/null; then
     echo -e "${RED}❌ Docker Compose is not installed. Please install Docker Compose first.${NC}"
     exit 1
 fi
@@ -31,18 +31,18 @@ fi
 
 # Stop any running containers
 echo -e "${GREEN}🛑 Stopping any running containers...${NC}"
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 
 # Build and start containers
 echo -e "${GREEN}🏗️  Building and starting containers...${NC}"
-docker-compose up -d --build
+docker compose up -d --build
 
 # Wait for services to be healthy
 echo -e "${GREEN}⏳ Waiting for services to be ready...${NC}"
 sleep 10
 
 # Check if services are running
-if docker-compose ps | grep -q "Up"; then
+if docker compose ps | grep -q "Up"; then
     echo -e "${GREEN}✅ All services are running!${NC}"
     echo ""
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -60,13 +60,13 @@ if docker-compose ps | grep -q "Up"; then
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
     echo "📋 Useful Commands:"
-    echo "   View logs:        docker-compose logs -f"
-    echo "   Stop services:    docker-compose down"
-    echo "   Restart:          docker-compose restart"
-    echo "   View status:      docker-compose ps"
+    echo "   View logs:        docker compose logs -f"
+    echo "   Stop services:    docker compose down"
+    echo "   Restart:          docker compose restart"
+    echo "   View status:      docker compose ps"
     echo ""
     echo -e "${YELLOW}⚠️  Remember to configure .env with your UiPath API credentials${NC}"
 else
-    echo -e "${RED}❌ Failed to start services. Check logs with: docker-compose logs${NC}"
+    echo -e "${RED}❌ Failed to start services. Check logs with: docker compose logs${NC}"
     exit 1
 fi
