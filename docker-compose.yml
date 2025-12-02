@@ -64,8 +64,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        VITE_API_URL: http://localhost:5000/api
     container_name: hedri-sakni-frontend
     restart: unless-stopped
     ports:
@@ -77,8 +75,6 @@ services:
       - backend
     networks:
       - hedri-sakni-network
-    environment:
-      - VITE_API_URL=http://localhost:5000/api
 
 volumes:
   postgres_data:
