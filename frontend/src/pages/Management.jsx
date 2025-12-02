@@ -97,6 +97,7 @@ function CustomersTab() {
                 <table className="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>الاسم</th>
                             <th>رقم الهاتف</th>
                             <th>الرقم الوطني</th>
@@ -108,6 +109,7 @@ function CustomersTab() {
                     <tbody>
                         {customers?.map((customer) => (
                             <tr key={customer.id}>
+                                <td>{customer.id}</td>
                                 <td>{customer.name}</td>
                                 <td>{customer.phone_number}</td>
                                 <td>{customer.national_id}</td>
@@ -311,6 +313,7 @@ function AreasTab() {
                 <table className="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>اسم المنطقة</th>
                             <th>الوصف</th>
                             <th>الحالة</th>
@@ -321,6 +324,7 @@ function AreasTab() {
                     <tbody>
                         {areas?.map((area) => (
                             <tr key={area.id}>
+                                <td>{area.id}</td>
                                 <td>{area.name}</td>
                                 <td>{area.description || '-'}</td>
                                 <td>
@@ -500,6 +504,7 @@ function ReservationsTab() {
                 <table className="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>المنطقة</th>
                             <th>التاريخ والوقت</th>
                             <th>الحالة</th>
@@ -510,6 +515,7 @@ function ReservationsTab() {
                     <tbody>
                         {slots?.map((slot) => (
                             <tr key={slot.id}>
+                                <td>{slot.id}</td>
                                 <td>{slot.area_name}</td>
                                 <td>
                                     {new Date(slot.scheduled_datetime).toLocaleString('ar-SA', {

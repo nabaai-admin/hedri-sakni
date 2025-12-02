@@ -10,6 +10,12 @@ export default defineConfig({
         watch: {
             usePolling: true
         },
+        fs: {
+            strict: false,
+        },
+        hmr: {
+            overlay: false
+        },
         proxy: {
             '/api': {
                 target: 'http://backend:5000',
