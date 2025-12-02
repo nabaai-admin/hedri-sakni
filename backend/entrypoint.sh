@@ -47,7 +47,7 @@ with app.app_context():
     try:
         from sqlalchemy import text
         with db.engine.connect() as conn:
-            conn.execute(text("ALTER TABLE areas ADD COLUMN IF NOT EXISTS link VARCHAR(500);"))
+            conn.execute(text('ALTER TABLE areas ADD COLUMN IF NOT EXISTS link VARCHAR(500);'))
             conn.commit()
             print('✅ Database schema updated (link column checked/added)')
     except Exception as e:
