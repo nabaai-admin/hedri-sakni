@@ -42,6 +42,17 @@ app = create_app(env)
 
 with app.app_context():
     db.create_all()
+    
+    # Auto-migration: Add link column if it doesn't exist
+    try:
+        from sqlalchemy import text
+        with db.engine.connect() as conn:
+            conn.execute(text("ALTER TABLE areas ADD COLUMN IF NOT EXISTS link VARCHAR(500);"))
+            conn.commit()
+            print('✅ Database schema updated (link column checked/added)')
+    except Exception as e:
+        print(f'⚠️ Schema update warning: {e}')
+        
     print('✅ Database tables created successfully!')
 "
 
