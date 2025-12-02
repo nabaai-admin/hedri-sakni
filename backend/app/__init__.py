@@ -237,7 +237,8 @@ def register_error_handlers(app):
     
     @app.errorhandler(Exception)
     def handle_exception(error):
-        app.logger.error(f"Unhandled exception: {str(error)}")
+        import traceback
+        app.logger.error(f"Unhandled exception: {str(error)}\n{traceback.format_exc()}")
         return jsonify({
             'success': False,
             'message': 'An unexpected error occurred'
