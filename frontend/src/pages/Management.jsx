@@ -315,6 +315,7 @@ function AreasTab() {
                         <tr>
                             <th>ID</th>
                             <th>اسم المنطقة</th>
+                            <th>الرابط</th>
                             <th>الوصف</th>
                             <th>الحالة</th>
                             <th>تاريخ الإنشاء</th>
@@ -326,6 +327,13 @@ function AreasTab() {
                             <tr key={area.id}>
                                 <td>{area.id}</td>
                                 <td>{area.name}</td>
+                                <td>
+                                    {area.link ? (
+                                        <a href={area.link} target="_blank" rel="noopener noreferrer" className="text-primary">
+                                            رابط
+                                        </a>
+                                    ) : '-'}
+                                </td>
                                 <td>{area.description || '-'}</td>
                                 <td>
                                     <span className={`badge badge-${area.is_active ? 'success' : 'danger'}`}>
@@ -369,6 +377,7 @@ function AreaForm({ area, onClose }) {
     const [formData, setFormData] = useState(area || {
         name: '',
         description: '',
+        link: '',
         is_active: true
     });
     const queryClient = useQueryClient();
@@ -410,6 +419,17 @@ function AreaForm({ area, onClose }) {
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
                             placeholder="مثال: الرياض، جدة، الدمام"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="label">رابط المنطقة (اختياري)</label>
+                        <input
+                            type="url"
+                            className="input"
+                            value={formData.link || ''}
+                            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                            placeholder="https://..."
                         />
                     </div>
 
