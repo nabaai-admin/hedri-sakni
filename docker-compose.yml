@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
     container_name: hedri-sakni-backend
     restart: unless-stopped
-    ports:
+    ports:5433
       - "5000:5000"
     environment:
       FLASK_ENV: development
