@@ -40,7 +40,7 @@ services:
       UIPATH_CLIENT_SECRET: ${UIPATH_CLIENT_SECRET:-your-client-secret}
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
-      CORS_ORIGINS: http://localhost:5173,http://localhost:3000,https://hedri-sakni.socialaipilot.com,http://hedri-sakni.socialaipilot.com,http://89.117.48.162:5173
+      CORS_ORIGINS: "*"
       LOG_LEVEL: INFO
       LOG_FILE: logs/app.log
       PORT: 5000
