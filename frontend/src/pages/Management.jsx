@@ -596,31 +596,37 @@ function ReservationsTab() {
 function ReservationForm({ slot, areas, onClose }) {
     const [formData, setFormData] = useState(() => {
         if (slot) {
-            // Convert ISO datetime to local datetime-local format
-            const date = new Date(slot.scheduled_datetime);
-            const localDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-                .toISOString()
-                .slice(0, 16);
+            const dateObj = new Date(slot.scheduled_datetime);
+            // Format to YYYY-MM-DD
+            const date = dateObj.toISOString().split('T')[0];
+            // Format to HH:mm
+            const time = dateObj.toTimeString().slice(0, 5);
+
             return {
                 area_id: slot.area_id,
-                scheduled_datetime: localDateTime
+                date: date,
+                time: time
             };
         }
         return {
             area_id: '',
-            scheduled_datetime: ''
+            date: '',
+            time: ''
         };
     });
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
         mutationFn: (data) => {
-            // Convert local datetime to ISO format
-            const isoDateTime = new Date(data.scheduled_datetime).toISOString();
+            // Combine date and time to ISO format
+            const dateTimeString = `${data.date}T${data.time}:00`;
+            const isoDateTime = new Date(dateTimeString).toISOString();
+
             const payload = {
-                ...data,
+                area_id: data.area_id,
                 scheduled_datetime: isoDateTime
             };
+
             return slot
                 ? reservationsAPI.update(slot.id, payload)
                 : reservationsAPI.create(payload);
@@ -639,7 +645,8 @@ function ReservationForm({ slot, areas, onClose }) {
         e.preventDefault();
 
         // Validate datetime is in the future
-        const selectedDate = new Date(formData.scheduled_datetime);
+        const dateTimeString = `${formData.date}T${formData.time}:00`;
+        const selectedDate = new Date(dateTimeString);
         const now = new Date();
 
         if (selectedDate <= now) {
@@ -674,19 +681,32 @@ function ReservationForm({ slot, areas, onClose }) {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label className="label">التاريخ والوقت</label>
-                        <input
-                            type="datetime-local"
-                            className="input"
-                            value={formData.scheduled_datetime}
-                            onChange={(e) => setFormData({ ...formData, scheduled_datetime: e.target.value })}
-                            required
-                        />
-                        <small style={{ color: 'var(--neutral-600)', fontSize: 'var(--font-size-sm)', marginTop: '4px', display: 'block' }}>
-                            سيتم إرسال طلبات الحجز تلقائياً في الوقت المحدد
-                        </small>
+                    <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
+                        <div className="form-group" style={{ flex: 1 }}>
+                            <label className="label">التاريخ</label>
+                            <input
+                                type="date"
+                                className="input"
+                                value={formData.date}
+                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{ flex: 1 }}>
+                            <label className="label">الوقت</label>
+                            <input
+                                type="time"
+                                className="input"
+                                value={formData.time}
+                                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                                required
+                            />
+                        </div>
                     </div>
+
+                    <small style={{ color: 'var(--neutral-600)', fontSize: 'var(--font-size-sm)', marginBottom: '1rem', display: 'block' }}>
+                        سيتم إرسال طلبات الحجز تلقائياً في الوقت المحدد
+                    </small>
 
                     <div className="form-actions">
                         <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>

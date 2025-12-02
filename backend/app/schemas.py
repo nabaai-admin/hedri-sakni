@@ -19,7 +19,7 @@ class CustomerSchema(Schema):
     phone_number = fields.Str(required=True, validate=validate.Length(min=1, max=20))
     national_id = fields.Str(required=True, validate=validate.Length(min=1, max=50))
     area_id = fields.Int(required=True)
-    area_name = fields.Str(dump_only=True)
+    area_name = fields.Str(dump_only=True, attribute='area.name')
     reservation_status = fields.Str(
         validate=validate.OneOf(['OPEN', 'SUCCESS', 'FAILED']),
         load_default='OPEN'
@@ -32,7 +32,7 @@ class ReservationSlotSchema(Schema):
     """Schema for ReservationSlot validation and serialization"""
     id = fields.Int(dump_only=True)
     area_id = fields.Int(required=True)
-    area_name = fields.Str(dump_only=True)
+    area_name = fields.Str(dump_only=True, attribute='area.name')
     scheduled_datetime = fields.DateTime(required=True)
     is_processed = fields.Bool(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
@@ -47,7 +47,7 @@ class ReservationAttemptSchema(Schema):
     customer_national_id = fields.Str(dump_only=True)
     reservation_slot_id = fields.Int(required=True)
     scheduled_datetime = fields.DateTime(dump_only=True)
-    area_name = fields.Str(dump_only=True)
+    area_name = fields.Str(dump_only=True, attribute='reservation_slot.area.name')
     request_sent_at = fields.DateTime(dump_only=True)
     request_payload = fields.Dict(dump_only=True)
     response_received_at = fields.DateTime(dump_only=True)
