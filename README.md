@@ -62,21 +62,25 @@ A full-stack admin application for managing and reviewing land reservation attem
 
 ### 🐳 Docker Installation (Recommended - Easiest!)
 
-**One command to run everything:**
+**Just one command to install and run everything:**
+
 ```bash
-./start.sh
+docker compose up -d
 ```
 
-That's it! Docker will automatically:
+That's it! 🎉 Docker will **automatically**:
+- ✅ Pull and build all required images
 - ✅ Start PostgreSQL database
+- ✅ Wait for database to be ready
+- ✅ Create all database tables automatically
 - ✅ Start Flask backend API
 - ✅ Start React frontend
 - ✅ Configure networking between services
 
-**Access the application:**
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:5000
-- API Docs: http://localhost:5000/api/docs
+**Wait 30-60 seconds for initialization, then access:**
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:5000
+- **API Docs**: http://localhost:5000/api/docs
 
 **Default credentials:**
 - Username: `admin`
@@ -84,12 +88,17 @@ That's it! Docker will automatically:
 
 **Useful commands:**
 ```bash
-./start.sh    # Start all services
-./stop.sh     # Stop all services
-./logs.sh     # View logs
+docker compose up -d          # Start all services
+docker compose down           # Stop all services
+docker compose logs -f        # View logs
+docker compose ps             # Check status
+docker compose restart        # Restart services
+docker compose up -d --build  # Rebuild and restart
 ```
 
-📚 **For detailed Docker instructions, see [DOCKER.md](DOCKER.md)**
+📚 **For detailed instructions, see [QUICKSTART.md](QUICKSTART.md) or [DOCKER.md](DOCKER.md)**
+
+
 
 ---
 

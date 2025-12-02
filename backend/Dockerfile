@@ -23,6 +23,10 @@ COPY . .
 # Create logs directory
 RUN mkdir -p logs
 
+# Copy and set permissions for entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Expose port
 EXPOSE 5000
 
@@ -30,5 +34,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:5000/api/external/health || exit 1
 
-# Run the application
-CMD ["python", "run.py"]
+# Use entrypoint script for automatic initialization
+ENTRYPOINT ["/entrypoint.sh"]
