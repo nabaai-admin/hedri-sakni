@@ -59,7 +59,7 @@ def create_app(config_name='default'):
             }
         },
         "basePath": "/",
-        "schemes": ["http", "https"],
+        # "schemes": ["http", "https"],  # Removed to allow auto-detection
         "securityDefinitions": {
             "Bearer": {
                 "type": "apiKey",
