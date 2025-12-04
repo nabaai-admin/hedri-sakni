@@ -17,8 +17,17 @@ reservations_schema = ReservationSlotSchema(many=True)
 @token_required
 @swag_from({
     'tags': ['Reservation Slots'],
+    'security': [{'Bearer': []}],
     'summary': 'Get all reservation slots',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'area_id',
             'in': 'query',
@@ -33,7 +42,19 @@ reservations_schema = ReservationSlotSchema(many=True)
         }
     ],
     'responses': {
-        200: {'description': 'List of reservation slots'}
+        200: {
+            'description': 'List of reservation slots',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'data': {
+                        'type': 'array',
+                        'items': {'$ref': '#/definitions/ReservationSlot'}
+                    }
+                }
+            }
+        }
     }
 })
 def get_reservation_slots():
@@ -59,6 +80,7 @@ def get_reservation_slots():
 @token_required
 @swag_from({
     'tags': ['Reservation Slots'],
+    'security': [{'Bearer': []}],
     'summary': 'Get reservation slot by ID',
     'parameters': [
         {
@@ -69,7 +91,16 @@ def get_reservation_slots():
         }
     ],
     'responses': {
-        200: {'description': 'Reservation slot details'},
+        200: {
+            'description': 'Reservation slot details',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'data': {'$ref': '#/definitions/ReservationSlot'}
+                }
+            }
+        },
         404: {'description': 'Reservation slot not found'}
     }
 })
@@ -86,6 +117,7 @@ def get_reservation_slot(slot_id):
 @token_required
 @swag_from({
     'tags': ['Reservation Slots'],
+    'security': [{'Bearer': []}],
     'summary': 'Create new reservation slot',
     'parameters': [
         {
@@ -107,7 +139,17 @@ def get_reservation_slot(slot_id):
         }
     ],
     'responses': {
-        201: {'description': 'Reservation slot created and scheduled'},
+        201: {
+            'description': 'Reservation slot created and scheduled',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'},
+                    'data': {'$ref': '#/definitions/ReservationSlot'}
+                }
+            }
+        },
         400: {'description': 'Validation error'},
         404: {'description': 'Area not found'}
     }
@@ -158,6 +200,7 @@ def create_reservation_slot():
 @token_required
 @swag_from({
     'tags': ['Reservation Slots'],
+    'security': [{'Bearer': []}],
     'summary': 'Update reservation slot',
     'parameters': [
         {
@@ -183,7 +226,17 @@ def create_reservation_slot():
         }
     ],
     'responses': {
-        200: {'description': 'Reservation slot updated'},
+        200: {
+            'description': 'Reservation slot updated',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'},
+                    'data': {'$ref': '#/definitions/ReservationSlot'}
+                }
+            }
+        },
         400: {'description': 'Validation error or slot already processed'},
         404: {'description': 'Reservation slot not found'}
     }
@@ -245,6 +298,7 @@ def update_reservation_slot(slot_id):
 @token_required
 @swag_from({
     'tags': ['Reservation Slots'],
+    'security': [{'Bearer': []}],
     'summary': 'Delete reservation slot',
     'parameters': [
         {

@@ -17,6 +17,7 @@ attempts_schema = ReservationAttemptSchema(many=True)
 @token_required
 @swag_from({
     'tags': ['Analytics'],
+    'security': [{'Bearer': []}],
     'summary': 'Get aggregated reservation statistics',
     'parameters': [
         {
@@ -155,6 +156,7 @@ def get_summary():
 @token_required
 @swag_from({
     'tags': ['Analytics'],
+    'security': [{'Bearer': []}],
     'summary': 'Get detailed reservation attempts',
     'parameters': [
         {
@@ -186,7 +188,19 @@ def get_summary():
         }
     ],
     'responses': {
-        200: {'description': 'List of reservation attempts'}
+        200: {
+            'description': 'List of reservation attempts',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'data': {
+                        'type': 'array',
+                        'items': {'$ref': '#/definitions/ReservationAttempt'}
+                    }
+                }
+            }
+        }
     }
 })
 def get_attempts():
@@ -224,6 +238,7 @@ def get_attempts():
 @token_required
 @swag_from({
     'tags': ['Analytics'],
+    'security': [{'Bearer': []}],
     'summary': 'Get detailed reservation attempt by ID',
     'parameters': [
         {
@@ -234,7 +249,16 @@ def get_attempts():
         }
     ],
     'responses': {
-        200: {'description': 'Reservation attempt details'},
+        200: {
+            'description': 'Reservation attempt details',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'data': {'$ref': '#/definitions/ReservationAttempt'}
+                }
+            }
+        },
         404: {'description': 'Attempt not found'}
     }
 })

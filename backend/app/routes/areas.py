@@ -15,9 +15,18 @@ areas_schema = AreaSchema(many=True)
 @token_required
 @swag_from({
     'tags': ['Areas'],
+    'security': [{'Bearer': []}],
     'summary': 'Get all areas',
     'description': 'Retrieve a list of all areas',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'is_active',
             'in': 'query',
@@ -61,8 +70,16 @@ def get_areas():
 @token_required
 @swag_from({
     'tags': ['Areas'],
+    'security': [{'Bearer': []}],
     'summary': 'Get area by ID',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer token (example: Bearer eyJhbGci...)'
+        },
         {
             'name': 'area_id',
             'in': 'path',
@@ -88,8 +105,16 @@ def get_area(area_id):
 @token_required
 @swag_from({
     'tags': ['Areas'],
+    'security': [{'Bearer': []}],
     'summary': 'Create new area',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer token (example: Bearer eyJhbGci...)'
+        },
         {
             'name': 'body',
             'in': 'body',
@@ -100,6 +125,7 @@ def get_area(area_id):
                 'properties': {
                     'name': {'type': 'string'},
                     'description': {'type': 'string'},
+                    'link': {'type': 'string'},
                     'is_active': {'type': 'boolean'}
                 }
             }
@@ -144,8 +170,16 @@ def create_area():
 @token_required
 @swag_from({
     'tags': ['Areas'],
+    'security': [{'Bearer': []}],
     'summary': 'Update area',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer token (example: Bearer eyJhbGci...)'
+        },
         {
             'name': 'area_id',
             'in': 'path',
@@ -161,6 +195,7 @@ def create_area():
                 'properties': {
                     'name': {'type': 'string'},
                     'description': {'type': 'string'},
+                    'link': {'type': 'string'},
                     'is_active': {'type': 'boolean'}
                 }
             }
@@ -209,8 +244,16 @@ def update_area(area_id):
 @token_required
 @swag_from({
     'tags': ['Areas'],
+    'security': [{'Bearer': []}],
     'summary': 'Delete area',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer token (example: Bearer eyJhbGci...)'
+        },
         {
             'name': 'area_id',
             'in': 'path',

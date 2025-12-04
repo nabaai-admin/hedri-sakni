@@ -15,9 +15,18 @@ customers_schema = CustomerSchema(many=True)
 @token_required
 @swag_from({
     'tags': ['Customers'],
+    'security': [{'Bearer': []}],
     'summary': 'Get all customers',
     'description': 'Retrieve a list of all customers with optional filtering',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'area_id',
             'in': 'query',
@@ -62,8 +71,17 @@ def get_customers():
 @token_required
 @swag_from({
     'tags': ['Customers'],
+    'security': [{'Bearer': []}],
     'summary': 'Get customer by ID',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'customer_id',
             'in': 'path',
@@ -89,8 +107,17 @@ def get_customer(customer_id):
 @token_required
 @swag_from({
     'tags': ['Customers'],
+    'security': [{'Bearer': []}],
     'summary': 'Create new customer',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'body',
             'in': 'body',
@@ -160,8 +187,17 @@ def create_customer():
 @token_required
 @swag_from({
     'tags': ['Customers'],
+    'security': [{'Bearer': []}],
     'summary': 'Update customer',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'customer_id',
             'in': 'path',
@@ -239,8 +275,17 @@ def update_customer(customer_id):
 @token_required
 @swag_from({
     'tags': ['Customers'],
+    'security': [{'Bearer': []}],
     'summary': 'Delete customer',
     'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'default': 'Bearer YOUR_TOKEN_HERE',
+            'description': 'MUST start with Bearer followed by space and token. Example: Bearer eyJhbGci...'
+        },
         {
             'name': 'customer_id',
             'in': 'path',

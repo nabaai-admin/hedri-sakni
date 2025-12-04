@@ -59,13 +59,20 @@ def create_app(config_name='default'):
             }
         },
         "basePath": "/",
-        # "schemes": ["http", "https"],  # Removed to allow auto-detection
+        "tags": [
+            {"name": "Authentication", "description": "Admin login and token management"},
+            {"name": "Areas", "description": "Manage geographical areas"},
+            {"name": "Customers", "description": "Manage customer registrations"},
+            {"name": "Reservation Slots", "description": "Schedule reservation processing"},
+            {"name": "Analytics", "description": "View statistics and reports"},
+            {"name": "External Integration", "description": "UiPath webhook endpoints"}
+        ],
         "securityDefinitions": {
             "Bearer": {
                 "type": "apiKey",
                 "name": "Authorization",
                 "in": "header",
-                "description": "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
+                "description": "Enter your Bearer token in the format **Bearer <token>**"
             }
         },
         "security": [
@@ -80,6 +87,7 @@ def create_app(config_name='default'):
                     "id": {"type": "integer"},
                     "name": {"type": "string"},
                     "description": {"type": "string"},
+                    "link": {"type": "string"},
                     "is_active": {"type": "boolean"},
                     "created_at": {"type": "string", "format": "date-time"},
                     "updated_at": {"type": "string", "format": "date-time"}
@@ -95,6 +103,39 @@ def create_app(config_name='default'):
                     "area_id": {"type": "integer", "description": "المنطقة"},
                     "area_name": {"type": "string"},
                     "reservation_status": {"type": "string", "enum": ["OPEN", "SUCCESS", "FAILED"], "description": "حالة الحجز"},
+                    "created_at": {"type": "string", "format": "date-time"},
+                    "updated_at": {"type": "string", "format": "date-time"}
+                }
+            },
+            "ReservationSlot": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "area_id": {"type": "integer"},
+                    "area_name": {"type": "string"},
+                    "scheduled_datetime": {"type": "string", "format": "date-time"},
+                    "is_processed": {"type": "boolean"},
+                    "created_at": {"type": "string", "format": "date-time"},
+                    "updated_at": {"type": "string", "format": "date-time"}
+                }
+            },
+            "ReservationAttempt": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "customer_id": {"type": "integer"},
+                    "customer_name": {"type": "string"},
+                    "customer_national_id": {"type": "string"},
+                    "reservation_slot_id": {"type": "integer"},
+                    "scheduled_datetime": {"type": "string", "format": "date-time"},
+                    "area_name": {"type": "string"},
+                    "request_sent_at": {"type": "string", "format": "date-time"},
+                    "request_payload": {"type": "object"},
+                    "response_received_at": {"type": "string", "format": "date-time"},
+                    "response_status": {"type": "string"},
+                    "response_code": {"type": "integer"},
+                    "response_message": {"type": "string"},
+                    "response_payload": {"type": "object"},
                     "created_at": {"type": "string", "format": "date-time"},
                     "updated_at": {"type": "string", "format": "date-time"}
                 }
@@ -160,6 +201,7 @@ def register_auth_routes(app):
         """
         Admin login endpoint
         ---
+        security: []
         tags:
           - Authentication
         parameters:
